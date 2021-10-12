@@ -5,12 +5,12 @@ services:
 
 # build a dev image to have the Recat src code to runs tests
 # prod image doesn't have code to run tests against
-before_install:
-  - docker build -t siyanththan/react-test -f ./client/Dockerfile.dev ./client
+# before_install:
+#   - docker build -t siyanththan/react-test -f ./client/Dockerfile.dev ./client
 
 # run tests
-script:
-  - docker run -e CI=true siyanththan/react-test npm test
+# script:
+#   - docker run -e CI=true siyanththan/react-test npm test
 
 # build prod versions of images of each project using the Dockerfile
 after_success:
