@@ -14,7 +14,7 @@ services:
 
 # build prod versions of images of each project using the Dockerfile
 after_success:
-  - docker build -t siyanththan/multi-container-client ./client
+  - docker build -t siyanththan/multi-container-client -f ./client/nginx/Dockerfile ./client
   - docker build -t siyanththan/multi-container-nginx ./nginx
   - docker build -t siyanththan/multi-container-server ./server 
   - docker build -t siyanththan/multi-container-worker ./worker
@@ -27,3 +27,16 @@ after_success:
   - docker push siyanththan/multi-container-nginx
   - docker push siyanththan/multi-container-server 
   - docker push siyanththan/multi-container-worker
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: multi-container-docker-app
+  env: Multicontainerdockerapp-env
+  bucket_name: elasticbeanstalk-us-east-2-961404665745
+  bucket_path: multi-container-app
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
